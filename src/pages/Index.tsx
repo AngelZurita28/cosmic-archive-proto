@@ -67,6 +67,7 @@ const Index = () => {
   const [showFunFact, setShowFunFact] = useState(true);
   const [nextChatId, setNextChatId] = useState(3);
   const [nextMessageId, setNextMessageId] = useState(1);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const handleNewChat = () => {
     setActiveChat(null);
@@ -129,18 +130,29 @@ const Index = () => {
   };
 
   return (
-    <div className="flex h-screen w-full overflow-hidden">
+    <div className="flex h-screen w-full overflow-hidden relative">
+      {/* Overlay */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 animate-fade-in"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       <Sidebar
         chats={chats}
         activeChat={activeChat}
         onNewChat={handleNewChat}
         onSelectChat={handleSelectChat}
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
       />
       <ChatView
         messages={messages}
         onSubmit={handleSubmit}
         showFunFact={showFunFact}
         onInputChange={handleInputChange}
+        onOpenMenu={() => setIsSidebarOpen(true)}
       />
     </div>
   );

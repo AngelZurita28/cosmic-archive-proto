@@ -6,9 +6,10 @@ import { Input } from "@/components/ui/input";
 interface SmartInputProps {
   onSubmit: (message: string, isSearchMode: boolean) => void;
   onInputChange?: (hasText: boolean) => void;
+  isCentered?: boolean;
 }
 
-const SmartInput = ({ onSubmit, onInputChange }: SmartInputProps) => {
+const SmartInput = ({ onSubmit, onInputChange, isCentered = false }: SmartInputProps) => {
   const [message, setMessage] = useState("");
   const [isSearchMode, setIsSearchMode] = useState(false);
 
@@ -31,7 +32,7 @@ const SmartInput = ({ onSubmit, onInputChange }: SmartInputProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-3xl mx-auto p-4">
+    <form onSubmit={handleSubmit} className={`w-full max-w-3xl mx-auto p-4 ${isCentered ? '' : ''}`}>
       <div className="flex items-center gap-2 bg-card border border-border rounded-lg shadow-sm p-2">
         {/* Search Mode Toggle */}
         <Button
