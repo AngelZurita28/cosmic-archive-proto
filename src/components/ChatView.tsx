@@ -3,17 +3,16 @@ import { Menu, Bot } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import FunFact from "./FunFact";
 import SmartInput from "./SmartInput";
-import ArticleCards from "./ArticleCards";
+import ArticleCards, { type Article } from "./ArticleCards";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "./ui/skeleton";
 
-// --- CAMBIOS AQUÍ ---
-// Interfaz actualizada para que coincida con Index.tsx
 interface Message {
   id: string;
   sender: "user" | "assistant";
   text: string;
   showArticles?: boolean;
+  relatedArticles?: Article[];
 }
 
 interface ChatViewProps {
@@ -22,7 +21,7 @@ interface ChatViewProps {
   showFunFact: boolean;
   onInputChange?: (hasText: boolean) => void;
   onOpenMenu: () => void;
-  isLoading: boolean; // Se añade la propiedad de carga
+  isLoading: boolean;
 }
 
 const ChatView = ({
@@ -62,7 +61,7 @@ const ChatView = ({
         <div className="h-full flex flex-col items-center justify-center px-4">
           <div className="text-center space-y-8 mb-8">
             <h1 className="font-serif text-5xl md:text-6xl font-bold text-foreground tracking-tight">
-              El Archivo Biocósmico
+              Data Orbit
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Explora el conocimiento científico sobre la vida en el espacio
@@ -103,8 +102,19 @@ const ChatView = ({
                       }`}
                     >
                       {message.sender === "assistant" ? (
-                        <div className="prose prose-sm max-w-none prose-p:text-foreground">
-                          <ReactMarkdown>{message.text}</ReactMarkdown>
+                        <div className="prose prose-sm max-w-none prose-p:mb-4 prose-ul:mb-4 prose-h3:mt-6 prose-h3:mb-2 prose-p:text-foreground">
+                          <ReactMarkdown
+                            components={{
+                              a: ({ node, ...props }) => (
+                                <a
+                                  className="text-blue-500 underline dark:text-blue-400"
+                                  {...props}
+                                />
+                              ),
+                            }}
+                          >
+                            {message.text}
+                          </ReactMarkdown>
                         </div>
                       ) : (
                         <p className="bg-primary/10 text-foreground leading-relaxed px-4 py-2 rounded-lg">
@@ -113,9 +123,11 @@ const ChatView = ({
                       )}
                     </div>
                   </div>
+                  {/* --- CAMBIO AQUÍ --- */}
+                  {/* Le pasamos las tarjetas del 'message' que se está renderizando actualmente */}
                   {message.sender === "assistant" && message.showArticles && (
                     <div className="mt-6">
-                      <ArticleCards />
+                      <ArticleCards articles={message.relatedArticles || []} />
                     </div>
                   )}
                 </div>

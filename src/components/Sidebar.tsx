@@ -66,7 +66,7 @@ const Sidebar = ({
               <div className="flex items-center gap-2">
                 <BookOpen className="w-6 h-6 text-primary" />
                 <h2 className="font-serif text-lg font-semibold text-foreground">
-                  El Archivo
+                  Data Orbit
                 </h2>
               </div>
               <div className="flex gap-1">

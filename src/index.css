@@ -8,7 +8,7 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Classic Book Theme - El Archivo Biocósmico */
+    /* Classic Book Theme - Data Orbit */
     --background: 60 29% 98%; /* Crema/papel #FAF9F6 */
     --foreground: 0 0% 29%; /* Gris oscuro sepia #4A4A4A */
 
@@ -62,17 +62,22 @@ All colors MUST be HSL.
     @apply bg-background text-foreground font-body antialiased;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-serif;
   }
 }
 
 @layer utilities {
   .font-serif {
-    font-family: 'Playfair Display', serif;
+    font-family: "Playfair Display", serif;
   }
 
   .font-body {
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
   }
 }
